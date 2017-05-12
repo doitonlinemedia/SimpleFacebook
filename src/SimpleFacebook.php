@@ -25,7 +25,7 @@ class SimpleFacebook {
         'attachments',
     ];
 
-    public $cachePath = CACHE_PATH.'/facebook/';
+    public $cachePath = __DIR__.'/cache/';
     public $useCache = true;
     public $cacheTime = 60; // in minutes
 
