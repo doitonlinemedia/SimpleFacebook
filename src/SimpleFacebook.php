@@ -63,7 +63,7 @@ class SimpleFacebook {
             $response = json_decode($response);
         }
 
-        if($this->useCache && $response->last_updated < $date) {
+        if($this->useCache && (!isset($response->last_updated) || $response->last_updated < $date)) {
             $response->last_updated = date('Y-m-d H:i:s');
             if (!is_dir($this->cachePath)) mkdir($this->cachePath);
             file_put_contents($file, json_encode($response));
