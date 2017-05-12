@@ -68,6 +68,6 @@ class SimpleFacebook {
             if (!is_dir($this->cachePath)) mkdir($this->cachePath);
             file_put_contents($file, json_encode($response));
         }
-        return collect($response->data);
+        return $response->data;
     }
 }
