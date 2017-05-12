@@ -1,0 +1,15 @@
+{
+  "name": "doitonlinemedia/SimpleFacebook",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Doit Online Media",
+      "email": "tim@doitonlinemedia.nl"
+    }
+  ],
+  "autoload": {
+    "psr-0": {
+      "Doitonlinemedia\\": "src/"
+    }
+  }
+}
