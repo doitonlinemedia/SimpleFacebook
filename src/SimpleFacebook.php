@@ -63,11 +63,38 @@ class SimpleFacebook {
             $response = json_decode($response);
         }
 
-        if($this->useCache && (!isset($response->last_updated) || $response->last_updated < $date)) {
+        if($this->useCache && $response->last_updated < $date) {
             $response->last_updated = date('Y-m-d H:i:s');
             if (!is_dir($this->cachePath)) mkdir($this->cachePath);
             file_put_contents($file, json_encode($response));
         }
-        return $response->data;
+        return collect($response->data)->map(function($data) {
+            return new SimpleFacebookPost($data);
+        });
+    }
+}
+
+class SimpleFacebookPost {
+
+    public $data;
+
+    function __construct($data)
+    {
+        $this->data = $data;
+    }
+
+    public function image()
+    {
+        if(isset($this->data->attachments->data[0])){
+            $data = $this->data->attachments->data[0];
+            if(strlen(data_get($this->data, 'media.image.src')) > 0) {
+                return data_get($data, 'media.image.src');
+            }
+        }else{
+            $data = $this->data->attachments->data[0];
+            if(isset($data->subattachments->data[0]) && $attachments = $data->subattachments->data[0]) {
+                return data_get($attachments, 'media.image.src');
+            }
+        }
     }
 }
